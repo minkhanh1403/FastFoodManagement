@@ -1,0 +1,28 @@
+{% extends 'admin/master.html' %}
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-danger">Thông báo</h2>
+            </div>
+            <div class="card-body">
+                {% if message %}
+                <p class="lead">Chưa có đơn đặt hàng nào quá {{ message }} giờ </p>
+                {% endif %}
+                <ul>
+                    {% for value in array %}
+                    <li>Đơn hàng có mã {{ value }} chưa được giao sau {{gio}} giờ</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

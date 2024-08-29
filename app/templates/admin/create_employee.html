@@ -1,0 +1,90 @@
+{% extends 'admin/master.html' %}
+
+{% block content %}
+<!--title-->
+<!--<head>-->
+<!--    <link href="{{ url_for('static', filename='css/register.css') }}" rel="stylesheet"/>-->
+<!--    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet"/>-->
+<!--</head>-->
+
+<!--<div class="header">-->
+<!--    <div class="header-img">-->
+<!--        <img src="https://i0.wp.com/www.printmag.com/wp-content/uploads/2022/06/Screen-Shot-2022-06-23-at-2.10.28-PM.png?fit=1568%2C998&quality=80&ssl=1" alt="I'MPROOK"/>-->
+<!--    </div>-->
+<!--    <div class="header-title">-->
+<!--        <h4 class="text-center">NHA SACH</h4>-->
+<!--        <h2 class="text-center text-danger">DAHATA</h2>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<hr>-->
+<!--title-->
+<h1 class="text-center text-info mt-1">THÊM NHÂN VIÊN</h1>
+
+{% if err_msg %}
+<div class="alert alert-danger">
+    {{ err_msg }}
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data" action="/index">
+    <div class="mb-3 mt-3">
+        <label for="name">Họ tên</label>
+         <input type="text" class="form-control" required id="name"
+               placeholder="Nhập tên" name="name">
+
+    </div>
+     <div class="mb-3 mt-3">
+        <label for="username" class="form-label">Tên đăng nhập:</label>
+        <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" name="username">
+    </div>
+
+
+    <div class="mb-3 mt-3">
+        <label for="password">Mật khẩu</label>
+        <input type="password" class="form-control" required id="password" placeholder="Nhập mật khẩu" name="password">
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="confirm">Xác nhận mật khẩu</label>
+        <input type="password" class="form-control" required id="confirm" placeholder="Nhập xác nhận mật khẩu"
+               name="confirm">
+
+    </div>
+<!--    <div class="form-floating mt-3 mb-3">-->
+<!--        <input type="date" class="form-control" required id="birthday" placeholder="Nhập xác nhận mật khẩu"-->
+<!--               name="birthday">-->
+<!--        <label for="birthday">Ngày sinh</label>-->
+<!--    </div>-->
+
+<!--    <p>Giới tính</p>-->
+<!--    <div class="form-sex-1">-->
+<!--        <div class="sex-male">-->
+<!--            <input type="radio" class="form-check-input" id="male" name="sex" value="1" checked>-->
+<!--            <label for="male">Nam</label>-->
+<!--        </div>-->
+<!--        <div class="sex-female">-->
+<!--            <input type="radio" class="form-check-input" id="female" name="sex" value="0">-->
+<!--            <label for="female">Nữ</label>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="form-floating mt-3 mb-3">-->
+<!--        <input type="tel" class="form-control" required id="telephone" placeholder="Số điện thoại" name="telephone">-->
+<!--        <label for="telephone">Số điện thoại</label>-->
+<!--    </div>-->
+
+<!--    <div class="form-floating mt-3 mb-3">-->
+<!--        <input type="text" class="form-control" required id="address" placeholder="Địa chỉ" name="address">-->
+<!--        <label for="address">Địa chỉ</label>-->
+<!--    </div>-->
+
+    <div class="mb-3 mt-3">
+        <label for="avatar">Ảnh đại diện</label>
+        <input type="file" class="form-control" id="avatar" name="avatar">
+    </div>
+
+    <div class="mb-3 mt-3">
+        <input type="submit" value="Thêm" class="btn btn-danger"/>
+    </div>
+
+</form>
+{% endblock %}

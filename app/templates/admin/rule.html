@@ -1,0 +1,36 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<form method="post" enctype="multipart/form-data">
+    <div class="quy_dinh_so_luong_sach">
+        <div class="mb-3 mt-3">
+            <label for="tien_kham" class="form-label">Số sách tối thiểu: (Số sách tối thiểu hiện tại: {{quy_dinh["so_sach_toi_thieu"] }}
+                )</label>
+            <input type="text" class="form-control" required id="tien_kham"
+                   placeholder="Nhập số sách tối thiểu bạn muốn thay đổi"
+                   name="so_sach_toi_thieu">
+            <label for="tien_kham" class="form-label">Số sách tối đa: (Số sách tối đa hiện tại: {{quy_dinh["so_sach_toi_da"] }}
+                )</label>
+            <input type="text" class="form-control" required id="tien_kham"
+                   placeholder="Nhập số sách tối đa bạn muốn thay đổi"
+                   name="so_sach_toi_da">
+        </div>
+    </div>
+    <!--"{:,.0f}".format(quy_dinh["tien_kham"])-->
+   <div class="quy_dinh_gio_huy_don">
+        <div class="mb-3 mt-3">
+            <label for="gio_huy" class="form-label">Số giờ hủy đơn hiện tại: (Số giờ hủy đơn hiện tại: {{quy_dinh["gio_huy_don"] }}
+                giờ)</label>
+            <input type="text" class="form-control" required id="tien_kham"
+                   placeholder="Nhập số giờ hủy đơn bạn muốn thay đổi"
+                   name="gio_huy_don">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% if err_msg %}
+<div class="alert alert-danger">
+    {{ err_msg }}
+</div>
+{% endif %}
+{% endblock %}

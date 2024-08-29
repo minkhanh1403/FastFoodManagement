@@ -1,0 +1,98 @@
+<style>
+        .header {
+            background-color: #F29F05;
+            color: Dark; /* Màu chữ của header */
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .navbar-brand
+        {
+            font-size: 30px;
+            font-weight: bold;
+        }
+</style>
+
+    <nav class="navbar navbar-expand-sm navbar-light header ">
+        <div class="container-fluid header" >
+            <a class="navbar-brand" href="#">KLHFastFood</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Trang chủ</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Danh mục món ăn</a>
+                      <ul class="dropdown-menu">
+                        {% for c in categories %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/?cate_id={{c.id}}">{{ c.name }}</a>
+                        </li>
+                    {% endfor %}
+                      </ul>
+                    </li>
+                    {%if current_user.is_authenticated%}
+<!--                    <li class="nav-item">-->
+<!--                          <a class="nav-link text-success" ></a>-->
+<!--                    </li>-->
+                    {% else %}
+                    <li class="nav-item">
+                          <a class="nav-link text-success" href="/login">Đăng nhập</a>
+                    </li>
+                    {% endif %}
+                    {%if current_user.is_authenticated%}
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link text-danger" ></a>-->
+<!--                    </li>-->
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/register">Đăng ký</a>
+                    </li>
+                    {% endif %}
+
+<!--                    {% if current_user.is_authenticated and current_user.user_role.value ==3  %}-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link text-danger" href="/logout">Đăng xuất</a>-->
+<!--                    </li>-->
+<!--                    {% endif %}-->
+                    {% if current_user.is_authenticated%}
+                    <li class="nav-item">
+                        <a class="nav-link text-success" href="/">
+                            <img src="{{ current_user.avatar }}" width="40" class="rounded-circle"
+                                 alt="{{ current_user.name }}"/>
+                            Chào <span class="text-info">{{ current_user.name }}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/logout">Đăng xuất</a>
+                    </li>
+                    {% endif %}
+                    {% if current_user.is_authenticated and current_user.user_role.value ==1 %}
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/cart">&#128722; <span
+                                class="badge bg-danger cart-counter">{{ cart_stats.total_quantity }}</span></a>
+                    </li>
+                    {% elif current_user.is_authenticated and current_user.user_role.value ==3 %}
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/cashier">&#128722; <span
+                                class="badge bg-danger cart-counter">{{ cashier_stats.total_quantity }}</span></a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/cart">&#128722; <span
+                                class="badge bg-danger cart-counter">{{ cart_stats.total_quantity }}</span></a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <form class="d-flex" method="get" action="/">
+                    <input class="form-control me-2" type="text" name="kw" placeholder="Nhập từ khóa...">
+                    <button class="btn btn-primary" type="submit">Tìm</button>
+                </form>
+            </div>
+        </div>
+    </nav>
