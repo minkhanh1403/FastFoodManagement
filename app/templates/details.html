@@ -1,0 +1,60 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<h1 class="text-center text-danger ms-3">CHI TIẾT SẢN PHẨM</h1>
+
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        <img src="{{ product.image }}" class="img-fluid mb-0" alt="{{ product.name }}" style="width:300px;height:300px"/>
+    </div>
+    <div class="col-md-8 col-sm-12 ">
+        <h1> Tên sản phẩm: {{ product.name }}</h1>
+        <h3>Giá: {{ "{:,.0f}".format(product.price) }} VNĐ</h3>
+        <h3>Tác giả:  {% for s in author %}
+                <span>{{s[0]}},</span>
+         {% endfor %} </h3>
+
+    </div>
+</div>
+{% if current_user.is_authenticated %}
+<div>
+    <div class="form-group mt-1">
+        <textarea class="form-control" id="comment" placeholder="Nội dung bình luận"></textarea>
+    </div>
+    <div class="mt-1">
+        <input type="button" onclick="addComment({{ product.id }})" value="Thêm bình luận" class="btn btn-info" />
+    </div>
+</div>
+{% else %}
+    <p>Vui lòng <a href="/login?next=/products/{{ product.id }}">đăng nhập</a> để bình luận!</p>
+{% endif %}
+<div class="mt-2" id="comments">
+    {% for c in comments %}
+    <div class="row alert alert-info">
+        <div class="col-md-1 col-xs-4">
+
+            <img src="{{ c.user.avatar }}" class="img-fluid rounded" />
+        </div>
+        <div class="col-md-11 col-xs-8">
+             <h5>{{ c.user.name }}</h5>
+            <p><strong>{{ c.content }}</strong></p>
+            <p>Bình luận lúc: <span class="date">{{ c.created_date }}</span></p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment-with-locales.min.js"></script>
+<script>
+    window.onload = function() {
+        let dates = document.getElementsByClassName("date");
+        for (let d of dates)
+            d.innerText = moment(d.innerText).locale("vi").fromNow()
+    }
+</script>
+{% endblock %}
+
+
+
+
