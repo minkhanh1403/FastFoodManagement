@@ -1,0 +1,163 @@
+{% extends 'layout/base.html' %}
+{% block title %}Đăng ký {% endblock %}
+{% block content %}
+<head>
+    <link href="{{ url_for('static', filename='css/register.css') }}" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet"/>
+</head>
+
+<style>
+    body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa; /* Màu nền cho toàn bộ trang */
+}
+
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff; /* Màu nền cho form */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
+    animation: fadeIn 0.5s ease-in-out; /* Hiệu ứng hiển thị form */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+label {
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ced4da; /* Màu viền input */
+    border-radius: 4px;
+    margin-top: 5px;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Màu viền input khi focus */
+}
+
+input[type="file"] {
+    border: 1px solid #ced4da; /* Màu viền input file */
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 5px;
+    transition: border-color 0.3s;
+}
+
+input[type="file"]:hover {
+    border-color: #007bff; /* Màu viền input file khi hover */
+}
+
+.btn-danger {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #dc3545; /* Màu nền cho nút Đăng ký */
+    color: #ffffff; /* Màu chữ cho nút Đăng ký */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    animation: fadeInBtn 1s ease-in-out; /* Hiệu ứng hiển thị nút */
+}
+
+@keyframes fadeInBtn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Màu nền khi hover nút Đăng ký */
+}
+</style>
+<h1 class="text-center text-info mt-1">ĐĂNG KÝ NGƯỜI DÙNG</h1>
+
+{% if err_msg %}
+<div class="alert alert-danger">
+    {{ err_msg }}
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data" action="/register">
+    <div class="mb-3 mt-3">
+        <label for="name">Họ tên</label>
+         <input type="text" class="form-control" required id="name"
+               placeholder="Nhập tên" name="name">
+
+    </div>
+     <div class="mb-3 mt-3">
+        <label for="username" class="form-label">Tên đăng nhập:</label>
+        <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" name="username">
+    </div>
+
+
+    <div class="mb-3 mt-3">
+        <label for="password">Mật khẩu</label>
+        <input type="password" class="form-control" required id="password" placeholder="Nhập mật khẩu" name="password">
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="confirm">Xác nhận mật khẩu</label>
+        <input type="password" class="form-control" required id="confirm" placeholder="Nhập xác nhận mật khẩu"
+               name="confirm">
+
+    </div>
+<!--    <div class="form-floating mt-3 mb-3">-->
+<!--        <input type="date" class="form-control" required id="birthday" placeholder="Nhập xác nhận mật khẩu"-->
+<!--               name="birthday">-->
+<!--        <label for="birthday">Ngày sinh</label>-->
+<!--    </div>-->
+
+<!--    <p>Giới tính</p>-->
+<!--    <div class="form-sex-1">-->
+<!--        <div class="sex-male">-->
+<!--            <input type="radio" class="form-check-input" id="male" name="sex" value="1" checked>-->
+<!--            <label for="male">Nam</label>-->
+<!--        </div>-->
+<!--        <div class="sex-female">-->
+<!--            <input type="radio" class="form-check-input" id="female" name="sex" value="0">-->
+<!--            <label for="female">Nữ</label>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="form-floating mt-3 mb-3">-->
+<!--        <input type="tel" class="form-control" required id="telephone" placeholder="Số điện thoại" name="telephone">-->
+<!--        <label for="telephone">Số điện thoại</label>-->
+<!--    </div>-->
+
+<!--    <div class="form-floating mt-3 mb-3">-->
+<!--        <input type="text" class="form-control" required id="address" placeholder="Địa chỉ" name="address">-->
+<!--        <label for="address">Địa chỉ</label>-->
+<!--    </div>-->
+
+    <div class="mb-3 mt-3">
+        <label for="avatar">Ảnh đại diện</label>
+        <input type="file" class="form-control" id="avatar" name="avatar">
+    </div>
+
+    <div class="mb-3 mt-3">
+        <input type="submit" value="Đăng ký" class="btn btn-danger"/>
+    </div>
+
+</form>
+{% endblock %}
