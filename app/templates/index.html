@@ -1,0 +1,85 @@
+{%extends 'layout/base.html'%}
+{% block content %}
+<style>
+    .card {
+    border: 1px solid #ddd; /* Màu viền cho card */
+    border-radius: 8px;
+    transition: box-shadow 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng khi hover */
+}
+
+.card-img-top {
+    width: 100%;
+    height: 400px;
+    object-fit: auto; /* Hiển thị hình ảnh đầy đủ trong khung */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #555;
+}
+
+.btn-primary1{
+    background-color: lightblue;
+    text-color:white;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+.btn-danger {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+.btn-primary1:hover,
+.btn-danger:hover {
+    filter: brightness(90%); /* Hiệu ứng mờ khi hover nút */
+}
+</style>
+<section class="container">
+        <ul class="pagination mt-1">
+<!--        {% for i in range(pages) %}-->
+<!--  <li class="page-item"><a class="page-link" href="/?page={{i + 1}}">{{ i + 1 }}</a></li>-->
+<!--        {% endfor %}-->
+</ul>
+    <div class="row">
+        {% for p in products %}
+        <div class="col-xs-12 col-md-3" style="padding: 8px;">
+            <div class="card">
+                <img class="card-img-top" src="{{ p.image }}" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">{{ p.name }}</h4>
+                    <p class="card-text"><b>Giá:</b> {{ p.price }} VNĐ</p>
+<!--                    <p class="card-text"><b>Tác giả:</b> {{ p.author_name }}</p>-->
+                    <a href="/products/{{p.id}}" class="btn btn-primary1">Xem chi tiết</a>
+
+
+                    {% if current_user.is_authenticated and current_user.user_role.value ==3 %}
+                    <a href="javascript:;" onclick="addToCartForEmp({{p.id}}, '{{p.name}}', {{p.price}})" class="btn btn-danger">Thêm</a>
+                    {% elif current_user.is_authenticated and current_user.user_role.value ==1 %}
+                    <a href="javascript:;" onclick="addToCart({{p.id}}, '{{p.name}}', {{p.price}})" class="btn btn-danger">Đặt hàng</a>
+                    {% else %}
+                    <a href="javascript:;" onclick="addToCart({{p.id}}, '{{p.name}}', {{p.price}})" class="btn btn-danger">Đặt hàng</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
