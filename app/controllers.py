@@ -24,6 +24,25 @@ def index():
                            pages=math.ceil(total / app.config['PAGE_SIZE']))
 
 
+def detail(id):
+    p = dao.get_product_by_id(id)
+    comments = dao.get_comments_by_product(id)
+    return render_template('detail.html', product=p, comments=comments)
+
+def comments(product_id):
+    data = []
+    for c in dao.load_comments(product_id=product_id):
+        data.append({
+            'id': c.id,
+            'content': c.content,
+            'created_date': str(c.created_date),
+            'user': {
+                'name': c.user.name,
+                'avatar': c.user.avatar
+            }
+        })
+
+    return jsonify(data)
 
 
 def load_users_in_register():
