@@ -123,15 +123,68 @@ def register():
     return render_template('register.html', err_msg=err_msg)
 
 
+# NVL
+def add_to_cart():
+    data = request.json
+
+    cart = session.get('cart')
+    if cart is None:
+        cart = {}
+
+    id = str(data.get("id"))
+    if id in cart:
+        cart[id]['quantity'] += 1
+    else:
+        cart[id] = {
+            "id": id,
+            "name": data.get("name"),
+            "price": data.get("price"),
+            "quantity": 1
+        }
+
+    session['cart'] = cart
+
+    """
+        {
+            "1": {
+                "id": "1",
+                "name": "...",
+                "price": 123,
+                "quantity": 2
+            },  "2": {
+                "id": "2",
+                "name": "...",
+                "price": 1234,
+                "quantity": 1
+            }
+        }
+    """
+
+    return jsonify(ultis.cart_stats(cart))
+
+
+def update_cart(product_id):
+    cart = session.get('cart')
+    if cart and product_id in cart:
+        quantity = request.json.get('quantity')
+        cart[product_id]['quantity'] = int(quantity)
+
+    session['cart'] = cart
+    return jsonify(ultis.cart_stats(cart))
+
+
+def delete_cart(product_id):
+    cart = session.get('cart')
+    if cart and product_id in cart:
+        del cart[product_id]
+
+    session['cart'] = cart
+    return jsonify(ultis.cart_stats(cart))
 
 
 
 
-
-
-
-
-
+#NVL
 @app.route("/generate_csv")
 def generate_csv():
     if len(users) == 0:
@@ -161,3 +214,88 @@ def download_csv():
 
     return send_file("users.csv", as_attachment=True, download_name="users.csv")
 
+
+
+
+#DVH
+
+#NVL
+def cashier():
+    return render_template("cashier.html", u=current_user)
+
+
+def add_to_cart_emp():
+    data = request.json
+
+    cartCashier = session.get('cartCashier')
+    if cartCashier is None:
+        cartCashier = {}
+
+    id = str(data.get("id"))
+    if id in cartCashier:
+        cartCashier[id]['quantity'] += 1
+    else:
+        cartCashier[id] = {
+            "id": id,
+            "name": data.get("name"),
+            "price": data.get("price"),
+            "quantity": 1
+        }
+
+    session['cartCashier'] = cartCashier
+
+    """
+        {
+            "1": {
+                "id": "1",
+                "name": "...",
+                "price": 123,
+                "quantity": 2
+            },  "2": {
+                "id": "2",
+                "name": "...",
+                "price": 1234,
+                "quantity": 1
+            }
+        }
+    """
+
+    return jsonify(ultis.cart_stats(cartCashier))
+
+
+def comments(product_id):
+    data = []
+    for c in dao.load_comments(product_id=product_id):
+        data.append({
+            'id': c.id,
+            'content': c.content,
+            'created_date': str(c.created_date),
+            'user': {
+                'name': c.user.name,
+                'avatar': c.user.avatar
+            }
+        })
+
+    return jsonify(data)
+
+
+def update_cart_emp(product_id):
+    cartCashier = session.get('cartCashier')
+    if cartCashier and product_id in cartCashier:
+        quantity = request.json.get('quantity')
+        cartCashier[product_id]['quantity'] = int(quantity)
+
+    session['cartCashier'] = cartCashier
+    return jsonify(ultis.cart_stats(cartCashier))
+
+
+def delete_cart_emp(product_id):
+    cartCashier = session.get('cartCashier')
+    if cartCashier and product_id in cartCashier:
+        del cartCashier[product_id]
+
+    session['cartCashier'] = cartCashier
+    return jsonify(ultis.cart_stats(cartCashier))
+#NVL\
+
+#DVH
