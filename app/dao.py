@@ -94,6 +94,38 @@ def create_employee(name, username, password, avatar):
     db.session.add(u)
     db.session.commit()
 
+#DVH
+def stats_revenue(thang=None, nam=None):
+    # query = db.session.query(func.extract('month', Receipt.created_date),
+    #                          func.sum(ReceiptDetails.quantity*ReceiptDetails.price))\
+    #                   .join(ReceiptDetails, ReceiptDetails.receipt_id.__eq__(Receipt.id))\
+    #                   .filter(func.extract('year', Receipt.created_date).__eq__(year))\
+    #                   .group_by(func.extract('month', Receipt.created_date))
+    # return query.all()
+    query = db.session.query(Product.id, Product.name, func.sum(ReceiptDetails.quantity * ReceiptDetails.price),
+                             func.sum(ReceiptDetails.quantity), Category.name) \
+        .join(Category, Product.category_id.__eq__(Category.id), isouter=True) \
+        .join(ReceiptDetails, ReceiptDetails.product_id.__eq__(Product.id)) \
+        .join(Receipt, ReceiptDetails.receipt_id.__eq__(Receipt.id))
+
+    if thang:
+        query = query.filter(func.extract('year', Receipt.created_date) == nam)
+
+    if nam:
+        query = query.filter(func.extract('month', Receipt.created_date) == thang)
+
+    return query.group_by(Product.id).order_by(-Product.id).all()
+def save_receipt(cart):
+    if cart:
+        r = Receipt(user=current_user)
+        db.session.add(r)
+
+        for c in cart.values():
+            d = ReceiptDetails(quantity=c['quantity'], price=c['price'],
+                               receipt=r, product_id=c['id'])
+            db.session.add(d)
+
+        db.session.commit()
 
 
 
