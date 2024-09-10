@@ -299,3 +299,34 @@ def delete_cart_emp(product_id):
 #NVL\
 
 #DVH
+    # @login_required
+def pay():
+    cart = session.get('cart')
+    # import pdb
+    # pdb.set_trace()
+    try:
+        dao.save_receipt(cart)
+    except Exception as ex:
+        print(str(ex))
+        return jsonify({'status': 500})
+    else:
+        del session['cart']
+
+    return jsonify({'status': 200})
+
+
+# @login_required
+def pay_emp():
+    cartCashier = session.get('cartCashier')
+    # import pdb
+    # pdb.set_trace()
+    try:
+        dao.save_receipt(cartCashier)
+    except Exception as ex:
+        print(str(ex))
+        return jsonify({'status': 500})
+    else:
+        session['print_cart'] = cartCashier
+        del session['cartCashier']
+
+    return jsonify({'status': 200})
