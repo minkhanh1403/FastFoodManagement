@@ -94,7 +94,7 @@ def create_employee(name, username, password, avatar):
     db.session.add(u)
     db.session.commit()
 
-#DVH
+#VH
 def stats_revenue(thang=None, nam=None):
     # query = db.session.query(func.extract('month', Receipt.created_date),
     #                          func.sum(ReceiptDetails.quantity*ReceiptDetails.price))\
